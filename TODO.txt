@@ -1,11 +1,11 @@
 ###########
 Todo: #####
 ###########
-enemies
-combat
+use minerals to repair ship
 ship upgrades (start with weapons)
 method for placing custom events at specific gridpoints
 trading
+how to attribute combat stuff to player??
 
 ########################################################
 ###########
@@ -28,6 +28,8 @@ auto-generate events (from a basic "bucket" of event parts?)...or at least rando
 Done: #####
 ###########
 
+enemies
+combat
 mining
 auto-place events on Grid
 are current events modifying stats properly? Does checking stats work properly?

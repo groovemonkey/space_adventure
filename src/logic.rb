@@ -7,6 +7,28 @@ def load_saved_game()
 end
 
 
+def combat(player, playerShip, enemyShip)
+  # manage combat and return the winner
+  while not (playerShip.destroyed or enemyShip.destroyed)
+    playerShip.attack(enemyShip, player)
+    puts("\n\n\n#######################\n\n\n")
+    
+    unless enemyShip.destroyed
+      enemyShip.attack(playerShip)
+      puts("\n\n###############\n\n")
+    end
+    
+    ## return result if someone died this round
+    if playerShip.destroyed
+      return :playerdies
+    elsif enemyShip.destroyed
+      return :playerwins
+    end
+  end
+end
+
+
+
 def return_possible_moves(player, worldgrid)
   # takes player and worldgrid objects, returns an array of possible directions for the player
   location = player.location
@@ -32,12 +54,21 @@ end
 
 
 def presentGameState(playerObj, worldObj)
-    # get the current planet, fire the event (unless you're on 0,0 -- i.e. just starting)
+    currentplanet = worldObj.getPlanetAt(playerObj.location)
+    # fire the event (unless you're on 0,0 -- i.e. just starting)
     unless playerObj.location == [0,0]
-      currentplanet = worldObj.getPlanetAt(playerObj.location)
-      unless currentplanet.event_has_fired
+      if not currentplanet.event_has_fired
         currentplanet.event.fire(playerObj, worldObj)
         currentplanet.event_has_fired = true
+      end
+    end
+    
+    if currentplanet.enemyships
+      result = combat(playerObj, playerObj.ship, currentplanet.enemyships)
+      if result == :playerwins
+        puts("You win!")
+      elsif result == :playerdies
+        return :you_are_dead
       end
     end
       

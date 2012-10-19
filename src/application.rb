@@ -47,15 +47,20 @@ end
 ####################
 
 input = ""
-while (choice != :quit) && (input != ["quit"])
+while (choice != :quit) && (input != ["quit"]) && (not player.ship.disabled)
   # present game to player
-  presentGameState(player, worldgrid)
+  result = presentGameState(player, worldgrid)
+  if result == :you_are_dead
+    break
+  else
   input = get_input()
   # execute the game-command chosen at the main-menu
   process_input(input, player, worldgrid)
+  end
   
 end
 
 #### shutdown and exit ####
+puts "you died...bye!"
 ## save world/player
 ## save stats

@@ -1,7 +1,8 @@
 require_relative "../../resources/tools.rb"
+require_relative "../../resources/weapons.rb"
 
 class Ship
-  attr_accessor :weapons, :weapon_mounts, :fuel, :name
+  attr_accessor :weapons, :weapon_mounts, :fuel, :name, :destroyed, :disabled
   
   def initialize()
       ## come up with stats
@@ -16,6 +17,8 @@ class Ship
     end
     
     @name = generate_shipname()
+    @disabled = false
+    @destroyed = false
     @weapon_mounts = rand(8) + 1 # min 1
     @weapons = []
     @crew = rand(20)
@@ -52,6 +55,87 @@ class Ship
     max cargo: #{@max_cargo}
     free cargo: #{@free_cargo}"
   end
+  
+  
+  
+  def take_damage(amount)
+    armor_left = @armor
+    hull_left = @hull
+    
+    # if there's armor over the hull...
+    if armor_left > 0
+      if (armor_left - amount) <= 0
+        @armor = 0
+        return :armor_empty
+      else
+        @armor -= amount
+        return :armor_damaged
+      end
+      
+    # if the armor is gone, but some hull integrity remains...
+    elsif hull_left > 0
+      if (hull_left - amount) <= 0
+        @hull = 0
+        @destroyed = true
+        return :destroyed #if the hull is breached, the ship dies
+      else
+        @hull -= amount
+        if @hull < 50
+          self.disabled = true
+          return :ship_disabled
+        else
+          return :hull_damaged
+        end
+      end
+      
+    # no armor, no hull...
+    else
+      return "this ship should already be disabled. This shouldn't be possible."
+    end
+  end
+  
+  
+  def attack(target, player=nil)
+    #attack another ship object
+    if player
+      targetname = "the #{target.name}'s"
+      attackername = "You fire your"
+      disabledname = "the #{target.name}"
+    else
+      targetname = "your"
+      attackername = "The #{@name} fires its"
+      disabledname = "your ship"
+    end
+    
+    
+    @weapons.each do |weaponsymbol|
+      weapon = $weaponlist[weaponsymbol]
+      damage = weapon.damage
+      
+      result = target.take_damage(damage)
+      
+      if result == :armor_damaged
+        puts "\n#{attackername} #{weapon.name}, hitting #{targetname} armor for #{damage} damage."
+        sleep(1)
+        player.damage_done += damage if player
+        
+      elsif result == :armor_empty
+        puts "\n#{attackername} #{weapon.name}, destroying #{targetname} armor."
+        sleep(1)
+      elsif result == :hull_damaged
+        puts "\n#{attackername} #{weapon.name}, hitting #{targetname} hull for #{damage} damage."
+        sleep(1)
+      elsif result == :ship_disabled
+        puts "\n#{attackername} #{weapon.name}, disabling #{disabledname}."
+        #break  ### Break here if you want to pause before destroying the enemy ship--put a dialogue here asking the player what to do.
+      elsif result == :destroyed
+        puts "\n#{attackername} #{weapon.name}, smashing through #{targetname} hull and destroying it completely."
+        break
+      end
+    end
+  end
+  
+  
   
 end # end ship class
 

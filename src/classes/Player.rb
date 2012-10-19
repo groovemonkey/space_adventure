@@ -1,5 +1,5 @@
 class Player
-  attr_accessor :name, :ship, :location, :fleet, :fuel_used, :credits, :credits_earned, :credits_found, :minerals, :minerals_mined
+  attr_accessor :name, :ship, :location, :fleet, :fuel_used, :credits, :credits_earned, :credits_found, :minerals, :minerals_mined, :damage_taken, :damage_done
   def initialize(name, ship, location)
     # Basic Stats
     @name = name
