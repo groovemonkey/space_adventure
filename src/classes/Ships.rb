@@ -1,7 +1,7 @@
 require_relative "../../resources/tools.rb"
 
 class Ship
-  attr_accessor :weapons, :weapon_mounts, :fuel
+  attr_accessor :weapons, :weapon_mounts, :fuel, :name
   
   def initialize()
       ## come up with stats

@@ -1,12 +1,16 @@
 class Player
-  attr_accessor :name, :ship, :location, :fleet, :fuel_used
+  attr_accessor :name, :ship, :location, :fleet, :fuel_used, :credits, :credits_earned, :credits_found
   def initialize(name, ship, location)
+    # Basic Stats
     @name = name
     @ship = ship
     @location = location
     @fleet = [] # can be filled with captured/bought ship objects
+    @credits = 1000
     
-    # From StatTracker class
+    # Achievement Stats
+    @credits_earned = 0
+    @credits_found = 0
     @enemies_killed = 0
     @fuel_used = 0
     @wrecks_found = 0
@@ -26,7 +30,9 @@ class Player
   
   
   def displayStats()
-    "Enemies Killed: #{@enemies_killed}
+    "Credits Earned: #{@credits_earned}
+    Credits Found: #{@credits_found}
+    Enemies Killed: #{@enemies_killed}
     Fuel Used: #{@fuel_used}
     Wrecks Found: #{@wrecks_found}
     Minerals Found: #{@minerals_found}
@@ -38,9 +44,19 @@ class Player
     Armor Lost: #{@armor_lost}
     Hull Lost: #{@hull_lost}
     Ships Lost: #{@ships_lost}
-    Times You've Started The Game': #{@times_started_game}
+    Times You've Started The Game: #{@times_started_game}
     Hours Played: #{@hours_played}
-    Planets Explored: #{@planets_explored}
+    Planets Explored: #{@planets_explored}\n\n
+    "
+  end
+  
+  def basicStats(worldObj)
+    "You are #{@name}.
+    Your location is #{@location}.
+    Your ship: #{@ship.name()} (type 'ship' to see ship stats)
+    Your fleet is #{@fleet}\n\n
+    You're On Planet #{worldObj.getPlanetAt(@location).displayStats()}
+    Your movement options are #{return_possible_moves(self, worldObj)}.
     "
   end
   

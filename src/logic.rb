@@ -41,15 +41,8 @@ def presentGameState(playerObj, worldObj)
       end
     end
       
-    
-    puts("
-    You are #{playerObj.name}.
-    Your location is #{playerObj.location}.
-    Your ship:\n\n #{playerObj.ship.displayStats()}\n\n
-    Your fleet is #{playerObj.fleet}
-    You're On Planet #{worldObj.getPlanetAt(playerObj.location).displayStats()}
-    Your movement options are #{return_possible_moves(playerObj, worldObj)}.
-    ")
+    # display Basic Player stats
+    puts(playerObj.basicStats(worldObj))
 end
   
 
@@ -120,14 +113,20 @@ end
         puts "You can't move there, dude."
       end
       
-      ## TODO: Randomly create a new event here, present to the player.
+    when command == "stats"
+      stats = playerObj.displayStats()
+      print(stats)
+      #PUTTING A gets() here breaks navigation...why? Is it the return value?
+      
+    when command == "ship"
+      stats =playerObj.ship.displayStats()
       
     when (command == "screw") && (args[0] == "you")
       puts "nah man, screw *YOU*"
     when command == "quit"
       nil
     else
-      puts "This is the impossible command."
+      puts "You can't #{command}. Not right here, and *definitely* not right now."
     end #case
     
   end

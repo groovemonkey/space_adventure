@@ -1,21 +1,37 @@
-TODO:
-###
+###########
+Todo: #####
+###########
+
+ship upgrades (start with weapons)
+ability to place custom events at specific gridpoints
+
+########################################################
+###########
+CONTENT: ##
+###########
+
+more events
+create weapons
+
+
+########################################################
+LAUNCH: (stuff to only do once EVERYTHING ELSE IS DONE)
+
+cool auto-generated ship descriptions, (put together from snippets based on crew size, weapon mounts, hull and armor stats, etc)
+auto-generate events (from a basic "bucket" of event parts?)...or at least randomize consequences (rewards)
+
+
+########################################################
+###########
+Done: #####
+###########
+
+auto-place events on Grid
+are current events modifying stats properly? Does checking stats work properly?
+processCommand should have a "stats" option that tells you your stats/achievements. It should be a DIFFERENT function than the existing
+	-displayStats() function.
 event system (random roll on each planet landing)
 a few test-events
-
-###
-
-Minor:
-create weapons
-auto-generate events
-stattracker -- application or logic? How is it instantiated for a new game, loaded from a saved game?
-
-LAUNCH: (stuff to only do once EVERYTHING ELSE IS DONE)
-cool auto-generated ship descriptions, (put together from snippets based on crew size, weapon mounts, hull and armor stats, etc)
-
-
-
-DONE:
 --- integrate MOVE command with sub-functions? i.e. a general move command that
 		-makes sure move is permitted/possible
 		-subtracts fuel
