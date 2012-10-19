@@ -39,7 +39,7 @@ class Ship
   
   
   def displayStats()
-    "Your Ship Stats:
+    "Ship Stats:
     name: #{@name}
     value: #{@value}
     armor: #{@armor}
@@ -56,6 +56,11 @@ class Ship
 end # end ship class
 
 
+
+
+class EnemyShip < Ship
+  
+end
 
 
 

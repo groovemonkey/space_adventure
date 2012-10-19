@@ -119,7 +119,11 @@ end
       #PUTTING A gets() here breaks navigation...why? Is it the return value?
       
     when command == "ship"
-      stats =playerObj.ship.displayStats()
+      stats = playerObj.ship.displayStats()
+      print(stats)
+      
+    when command == "mine"
+      playerObj.mine_planet(worldObj)
       
     when (command == "screw") && (args[0] == "you")
       puts "nah man, screw *YOU*"

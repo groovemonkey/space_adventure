@@ -1,9 +1,11 @@
 ###########
 Todo: #####
 ###########
-
+enemies
+combat
 ship upgrades (start with weapons)
-ability to place custom events at specific gridpoints
+method for placing custom events at specific gridpoints
+trading
 
 ########################################################
 ###########
@@ -26,6 +28,7 @@ auto-generate events (from a basic "bucket" of event parts?)...or at least rando
 Done: #####
 ###########
 
+mining
 auto-place events on Grid
 are current events modifying stats properly? Does checking stats work properly?
 processCommand should have a "stats" option that tells you your stats/achievements. It should be a DIFFERENT function than the existing
