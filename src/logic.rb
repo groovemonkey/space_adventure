@@ -7,13 +7,52 @@ def load_saved_game()
 end
 
 
+
+#####################
+## COMBAT FUNCTIONS
+#####################
+
+def capture_ship(capturer, disabledShip, planet)
+  # takes a player object (capturer) and a ship object (ship being captured)
+  #add the disabled ship to the @fleet of the capturer
+  capturer.fleet << disabledShip
+  #remove it from the planet
+  planet.enemyships = nil
+  # increase player stats
+  capturer.ships_captured += 1
+end
+
+
+def get_player_combatchoice(result)
+  # takes the result of a combat round -- SYMBOL -- and gives the player a choice about what to do next.
+  if result == :ship_disabled
+    puts "You've disabled the enemy ship. Do you want to *destroy* it or try to *capture* it?"
+    choice = ""
+    while not [:capture, :destroy].include?(choice) #limit what the player can pass to our application here.
+      choice = get_input()[0].to_sym
+    end
+    return choice # once the choice is something acceptable, return it.
+  end
+end
+
+
 def combat(player, playerShip, enemyShip)
   # manage combat and return the winner
   while not (playerShip.destroyed or enemyShip.destroyed)
-    playerShip.attack(enemyShip, player)
+    ## player goes first
+    result = playerShip.attack(enemyShip, player)
+    if result == :ship_disabled
+      playerchoice = get_player_combatchoice(result)
+      if playerchoice == :capture
+        return playerchoice
+      else
+        player.ships_disabled -= 1 # this will count as a destruction, not a disabling
+      end
+    end
     puts("\n\n\n#######################\n\n\n")
     
-    unless enemyShip.destroyed
+    # if enemy is still alive, enemy attacks player
+    unless (enemyShip.destroyed or enemyShip.disabled)
       enemyShip.attack(playerShip)
       puts("\n\n###############\n\n")
     end
@@ -55,6 +94,28 @@ end
 
 def presentGameState(playerObj, worldObj)
     currentplanet = worldObj.getPlanetAt(playerObj.location)
+    
+    # Engage in combat (if there's a ship at this planet)
+    if currentplanet.enemyships
+      result = combat(playerObj, playerObj.ship, currentplanet.enemyships)
+      if result == :playerwins
+        puts("You win!")
+      elsif result == :playerdies
+        return :you_are_dead
+      elsif result == :capture
+        if rand(3).even? #50% of the time...
+          capture_ship(playerObj, currentplanet.enemyships, currentplanet)
+          puts "You successfully board the ship, kill the remaining crew, and take control."
+        else
+          puts "You try to capture the ship, but the pilot self-destructs before you can board."
+          #remove it from the planet
+          currentplanet.enemyships = nil
+          #give the player credit
+          playerObj.ships_destroyed += 1
+        end
+      end
+    end
+    
     # fire the event (unless you're on 0,0 -- i.e. just starting)
     unless playerObj.location == [0,0]
       if not currentplanet.event_has_fired
@@ -62,18 +123,15 @@ def presentGameState(playerObj, worldObj)
         currentplanet.event_has_fired = true
       end
     end
-    
-    if currentplanet.enemyships
-      result = combat(playerObj, playerObj.ship, currentplanet.enemyships)
-      if result == :playerwins
-        puts("You win!")
-      elsif result == :playerdies
-        return :you_are_dead
-      end
-    end
       
     # display Basic Player stats
     puts(playerObj.basicStats(worldObj))
+    puts("Your options:
+    mine              - try mining minerals from this planet
+    move <direction   - move in a direction
+    ship              - view ship stats
+    stats             - view your player stats and achievements
+    ")
 end
   
 
@@ -155,6 +213,11 @@ end
       
     when command == "mine"
       playerObj.mine_planet(worldObj)
+      
+    when command == "repair"
+      points_repaired = playerObj.ship.repair(playerObj.minerals)
+      playerObj.minerals -= points_repaired
+      playerObj.amount_repaired += points_repaired
       
     when (command == "screw") && (args[0] == "you")
       puts "nah man, screw *YOU*"

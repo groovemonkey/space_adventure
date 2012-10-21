@@ -47,10 +47,11 @@ end
 ####################
 
 input = ""
-while (choice != :quit) && (input != ["quit"]) && (not player.ship.disabled)
+while (choice != :quit) && (input != ["quit"]) && (not player.ship.destroyed)
   # present game to player
   result = presentGameState(player, worldgrid)
   if result == :you_are_dead
+    puts "You died..."
     break
   else
   input = get_input()
@@ -61,6 +62,6 @@ while (choice != :quit) && (input != ["quit"]) && (not player.ship.disabled)
 end
 
 #### shutdown and exit ####
-puts "you died...bye!"
+puts "\n\nBye!\n"
 ## save world/player
 ## save stats

@@ -3,16 +3,23 @@ require_relative "Ships.rb"
 
 class Planet
   attr_accessor :event, :event_has_fired, :minerals, :enemyships
-  def initialize(name)
-    @name = name
+  def initialize()
+    planetnames = ["Testia", "Khyridia", "Earth", "Mars", "Venus", "Saturn", "Mercury", "Europa", "Pooda", "Beetelgeuse",].shuffle
+    ## make sure the planetnames haven't been exhausted
+        pname = planetnames.pop
+        if pname == nil
+          pname = "PlanetTOOMANYplanets"
+        end
+        
+    @name = pname
     # randomly generate humans, minerals
     @humans = ((rand * 100) / 4).floor
     @minerals = (rand * 100).floor
     @event = $eventlist[rand($eventlist.length)]
     @event_has_fired = false
     
-    #@enemyships = nil
-    @enemyships = Ship.new()# if rand(4) == 4
+    @enemyships = nil
+    @enemyships = EnemyShip.new() if rand(4) == 3
     
   end
   
@@ -29,7 +36,7 @@ class Planet
       playerObj.minerals += amount
       playerObj.minerals_mined += amount
       @minerals = 0
-      puts "You just mined #{amount} minerals from #{@name}."
+      puts "You just mined #{amount} kg of rare minerals from #{@name}."
     else
       puts "There are no minerals to mine on #{@name}."
     end

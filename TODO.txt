@@ -1,11 +1,15 @@
 ###########
 Todo: #####
 ###########
-use minerals to repair ship
+repair should repair every ship in your fleet if possible
+combat should let every ship in the fleet fight
+
+after each ROUND of combat, give player a new choice? (escape, keep fighting)
 ship upgrades (start with weapons)
 method for placing custom events at specific gridpoints
 trading
-how to attribute combat stuff to player??
+achievements
+how to structure combat so player can update his take_damage stats?
 
 ########################################################
 ###########
@@ -27,7 +31,8 @@ auto-generate events (from a basic "bucket" of event parts?)...or at least rando
 ###########
 Done: #####
 ###########
-
+use minerals to repair ship
+no combat on home planet (0,0)
 enemies
 combat
 mining
