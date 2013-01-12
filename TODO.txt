@@ -1,9 +1,11 @@
 ###########
 Todo: #####
 ###########
+
+Jan 12, 2013: add scriptable planets (in Planet.new(), probably?). I want to be able to have manually created planets in /resources/planets.rb -- only if the grid is larger than the list of manually created planets, should they be randomly created.
+
 repair should repair every ship in your fleet if possible
 combat should let every ship in the fleet fight
-
 after each ROUND of combat, give player a new choice? (escape, keep fighting)
 ship upgrades (start with weapons)
 method for placing custom events at specific gridpoints
