@@ -41,7 +41,7 @@ class Player
     Credits Found: #{@credits_found}
     Minerals Mined: #{@minerals_mined}
     
-     <<COMBAT>>
+    <<COMBAT>>
     Ships Destroyed: #{@ships_destroyed}
     Ships Disabled: #{@ships_disabled}
     Ships Captured: #{@ships_captured}
@@ -67,11 +67,11 @@ class Player
   end
   
   def basicStats(worldObj)
-    "\n\nYou are #{@name} (type 'stats' to see your player stats)
+    "\n\nYou are #{@name}.
     Your location is #{@location}
-    Credits: {@credits}
-    Minerals: {@minerals}
-    Your ship: #{@ship.name()} (type 'ship' to see ship stats)
+    Credits: #{@credits}
+    Minerals in cargo hold: #{@minerals} kg.
+    Your ship: #{@ship.name()}
     
     You're On Planet #{worldObj.getPlanetAt(@location).displayStats()}
     Your movement options are #{return_possible_moves(self, worldObj)}.
@@ -83,7 +83,7 @@ class Player
     planet.getMinedBy(self)
   end
   
-  def view_fleet
+  def view_fleet()
     "Your fleet is #{
       list = ""
       @fleet.each do |ship|

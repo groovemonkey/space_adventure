@@ -130,7 +130,11 @@ def presentGameState(playerObj, worldObj)
     mine              - try mining minerals from this planet
     move <direction   - move in a direction
     ship              - view ship stats
+    fleet             - view fleet stats
     stats             - view your player stats and achievements
+    repair            - repair your ship, using minerals
+
+    (save/quit)
     ")
 end
   
@@ -208,8 +212,10 @@ end
       #PUTTING A gets() here breaks navigation...why? Is it the return value?
       
     when command == "ship"
-      stats = playerObj.ship.displayStats()
-      print(stats)
+      print playerObj.ship.displayStats()
+
+    when command == "fleet"
+      print playerObj.view_fleet()
       
     when command == "mine"
       playerObj.mine_planet(worldObj)

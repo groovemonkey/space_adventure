@@ -2,6 +2,16 @@
 Todo: #####
 ###########
 
+Random starting location?
+BUG -- Fuel doesn't decrease in fleet ships
+Add weapons list
+Choose random weapons during ship creation
+Add ability to refuel + fuel checks during travel (what to do when out of fuel? Ransom humans?)
+Add shops on planets
+    -randomly generated mineral price
+Repair can be done with money OR minerals?
+
+
 Jan 12, 2013: add scriptable planets (in Planet.new(), probably?). I want to be able to have manually created planets in /resources/planets.rb -- only if the grid is larger than the list of manually created planets, should they be randomly created.
 
 repair should repair every ship in your fleet if possible

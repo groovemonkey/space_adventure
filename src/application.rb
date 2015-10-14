@@ -8,7 +8,7 @@ require_relative "classes/Ships.rb"
 
 def start_new_game()
   # create universe + player
-  worldgrid = Grid.new(3)
+  worldgrid = Grid.new(9)
   player = Player.new("Dave", Ship.new(), [0,0])
   return [worldgrid, player]
 end
